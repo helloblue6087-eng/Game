@@ -1,0 +1,235 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --bg: 7 6 12;
+    --panel: 17 14 28;
+    --panel-2: 23 19 37;
+    --line: 46 38 74;
+    --accent: 160 107 255;
+    --accent-soft: 196 163 255;
+    --text: 233 229 246;
+    --muted: 152 143 178;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: rgb(var(--bg));
+    background-image:
+      radial-gradient(120% 70% at 12% -10%, rgba(160, 107, 255, 0.18), transparent 62%),
+      radial-gradient(95% 55% at 100% 0%, rgba(93, 184, 255, 0.1), transparent 58%),
+      radial-gradient(80% 60% at 50% 120%, rgba(160, 107, 255, 0.08), transparent 60%);
+    background-attachment: fixed;
+    color: rgb(var(--text));
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04";
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: none;
+  }
+
+  ::selection {
+    background: rgba(160, 107, 255, 0.32);
+  }
+
+  ::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(160, 107, 255, 0.22);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(160, 107, 255, 0.4);
+    background-clip: content-box;
+  }
+
+  input,
+  textarea,
+  button,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+
+  input:focus-visible,
+  textarea:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 2px solid rgba(160, 107, 255, 0.65);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply rounded-2xl border border-white/[0.06] bg-white/[0.025] backdrop-blur-xl;
+  }
+
+  .panel-solid {
+    @apply rounded-2xl border border-white/[0.06];
+    background: rgb(var(--panel));
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-white/10 px-2.5 py-1 text-[11px] font-medium tracking-wide;
+  }
+
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 rounded-xl px-3.5 py-2.5 text-sm font-semibold transition-all duration-150 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-45;
+  }
+
+  .btn-primary {
+    @apply btn text-white;
+    background-image: linear-gradient(135deg, rgba(160, 107, 255, 1), rgba(122, 78, 214, 1));
+    box-shadow: 0 10px 30px -12px rgba(160, 107, 255, 0.75);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 14px 36px -10px rgba(160, 107, 255, 0.9);
+  }
+
+  .btn-ghost {
+    @apply btn border border-white/10 bg-white/[0.04] text-white/85 hover:bg-white/[0.08];
+  }
+
+  .btn-danger {
+    @apply btn border border-rose-400/30 bg-rose-500/15 text-rose-200 hover:bg-rose-500/25;
+  }
+
+  .btn-quiet {
+    @apply btn text-white/70 hover:bg-white/[0.06] hover:text-white;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-white/10 bg-black/35 px-3.5 py-2.5 text-sm text-white/90 placeholder:text-white/30 focus:border-accent/60 focus:outline-none;
+  }
+
+  .label {
+    @apply mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.14em] text-white/45;
+  }
+
+  .mono {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-variant-ligatures: none;
+  }
+
+  .hairline {
+    @apply border-b border-white/[0.06];
+  }
+
+  .scroll-area {
+    scrollbar-gutter: stable;
+    overscroll-behavior: contain;
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .safe-top {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  .streaming-caret::after {
+    content: "";
+    display: inline-block;
+    width: 7px;
+    height: 1.05em;
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    background: rgb(var(--accent-soft));
+    animation: blink 1s steps(2, start) infinite;
+  }
+
+  @keyframes blink {
+    to {
+      visibility: hidden;
+    }
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Markdown rendering inside chat / logs */
+.prose-agent {
+  @apply text-[15px] leading-relaxed text-white/85;
+}
+.prose-agent h1,
+.prose-agent h2,
+.prose-agent h3 {
+  @apply mt-4 mb-2 font-semibold text-white;
+}
+.prose-agent h1 {
+  @apply text-base;
+}
+.prose-agent h2 {
+  @apply text-[15px];
+}
+.prose-agent h3 {
+  @apply text-sm uppercase tracking-wider text-white/60;
+}
+.prose-agent p {
+  @apply my-2;
+}
+.prose-agent ul {
+  @apply my-2 list-disc space-y-1 pl-5;
+}
+.prose-agent ol {
+  @apply my-2 list-decimal space-y-1 pl-5;
+}
+.prose-agent a {
+  @apply text-accent-soft underline decoration-accent-soft/40 underline-offset-2;
+}
+.prose-agent code {
+  @apply rounded bg-black/50 px-1.5 py-0.5 text-[0.86em] text-accent-soft mono;
+}
+.prose-agent pre {
+  @apply my-3 overflow-x-auto rounded-xl border border-white/10 bg-black/55 p-3 text-[12.5px] leading-relaxed;
+}
+.prose-agent pre code {
+  @apply bg-transparent p-0 text-white/85;
+}
+.prose-agent strong {
+  @apply font-semibold text-white;
+}
+.prose-agent em {
+  @apply text-white/70;
+}
+.prose-agent blockquote {
+  @apply my-2 border-l-2 border-accent/50 pl-3 text-white/70;
+}
+.prose-agent table {
+  @apply my-3 w-full border-collapse text-sm;
+}
+.prose-agent th,
+.prose-agent td {
+  @apply border-b border-white/10 px-2 py-1 text-left;
+}
